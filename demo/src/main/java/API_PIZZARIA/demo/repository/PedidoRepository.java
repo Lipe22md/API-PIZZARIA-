@@ -12,5 +12,6 @@ Responsável: Robert
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     // JpaRepository já fornece:
     // findAll(), findById(id), save(entidade), delete(entidade)
-    // Não preciso criar nada extra por enquanto...
+    // Tenho que espera os outros.
 }
+
