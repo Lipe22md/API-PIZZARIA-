@@ -1,5 +1,9 @@
 package API_PIZZARIA.demo.model;
 
+/*
+Responsável: Mariana e Patric
+*/
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,5 +31,6 @@ public class Cliente {
     @JsonManagedReference
     private List<Pedido> pedidos;
 }
+
 
 
