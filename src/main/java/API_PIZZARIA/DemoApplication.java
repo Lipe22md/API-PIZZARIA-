@@ -1,4 +1,4 @@
-package API_PIZZARIA.demo;
+package API_PIZZARIA;
 
 /*
 Responsável: Robert

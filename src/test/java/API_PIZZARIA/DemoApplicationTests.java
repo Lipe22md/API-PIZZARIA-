@@ -1,4 +1,4 @@
-package API_PIZZARIA.demo;
+package API_PIZZARIA;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
