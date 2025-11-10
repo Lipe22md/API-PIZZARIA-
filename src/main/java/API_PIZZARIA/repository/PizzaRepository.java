@@ -1,7 +1,7 @@
 package API_PIZZARIA.repository;
 
 /*
-Responsáveis: Vinícius, Lucas
+Responsáveis: Vinícius, Lucas, Robert.
 */
 
 public interface PizzaRepository {
