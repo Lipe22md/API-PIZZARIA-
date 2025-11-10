@@ -26,6 +26,6 @@ public class ItemPedido {
     Set<Pizza> pizza;
 
     public double getSubtotal() {
-        return 0;
+        return precoUnitario * quantidade;
     }
 }
