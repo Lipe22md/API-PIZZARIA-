@@ -3,8 +3,8 @@ package API_PIZZARIA.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.API_PIZZARIA.model.Cliente;
-import com.API_PIZZARIA.repository.ClienteRepository;
+import API_PIZZARIA.model.Cliente;
+import API_PIZZARIA.repository.ClienteRepository;
 import java.util.List;
 import java.util.Optional;
 

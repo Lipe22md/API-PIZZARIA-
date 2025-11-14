@@ -1,6 +1,6 @@
-package API_PIZZARIA.demo.controller;
-import API_PIZZARIA.demo.model.Pizza;
-import API_PIZZARIA.demo.repository.PizzaRepository;
+package API_PIZZARIA.controller;
+import API_PIZZARIA.model.Pizza;
+import API_PIZZARIA.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
