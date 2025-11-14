@@ -45,7 +45,7 @@ public class Pedido {
     public void calcularValorTotal() {
         if (itens != null) {
             valorTotal = itens.stream()
-                    // getSubtotal() não existe em ItemPedido tem que fazer.
+                    // getSubtotal().
                     .mapToDouble(ItemPedido::getSubtotal)
                     .sum();
         } else {
