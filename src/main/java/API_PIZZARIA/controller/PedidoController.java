@@ -62,5 +62,4 @@ public class PedidoController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // Erros porque não tem outras classes: cliente nulo, itens nulos, getSubtotal() não existe. Depois eu vejo quando fizeram a parte deles.
 }
