@@ -913,10 +913,10 @@
 </div>
 
 <script>
-    // ==================== CONFIGURAÇÃO DA API ====================
-    const API_BASE_URL = 'http://localhost:8080/api'; // Altere para a URL da sua API
+    //  CONFIGURAÇÃO DA API
+    const API_BASE_URL = 'http://localhost:8080';
 
-    // ==================== CAROUSEL ====================
+    // CAROUSEL 
     let currentSlide = 0;
     const slides = document.querySelectorAll('.carousel-slide');
     const indicators = document.querySelectorAll('.carousel-indicator');
@@ -924,10 +924,10 @@
     function showSlide(index) {
         slides.forEach(slide => slide.classList.remove('active'));
         indicators.forEach(indicator => indicator.classList.remove('active'));
-
+        
         if (index >= slides.length) currentSlide = 0;
         if (index < 0) currentSlide = slides.length - 1;
-
+        
         slides[currentSlide].classList.add('active');
         indicators[currentSlide].classList.add('active');
     }
@@ -948,7 +948,7 @@
         showSlide(currentSlide);
     }, 5000);
 
-    // ==================== NAVEGAÇÃO SUAVE ====================
+    // NAVEGAÇÃO SUAVE
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -964,7 +964,7 @@
         });
     });
 
-    // ==================== PIZZAS ====================
+    // PIZZAS
     let pizzas = [];
     let currentPizzaId = null;
 
@@ -1049,7 +1049,7 @@
         const modal = document.getElementById('pizzaModal');
         const title = document.getElementById('pizzaModalTitle');
         const form = document.getElementById('pizzaForm');
-
+        
         if (id) {
             title.textContent = 'Editar Pizza';
             const pizza = pizzas.find(p => p.id === id);
@@ -1065,7 +1065,7 @@
             title.textContent = 'Nova Pizza';
             form.reset();
         }
-
+        
         modal.classList.add('active');
     }
 
@@ -1077,7 +1077,7 @@
 
     async function submitPizza(event) {
         event.preventDefault();
-
+        
         const pizza = {
             nome: document.getElementById('pizzaNome').value,
             tamanho: document.getElementById('pizzaTamanho').value,
@@ -1087,12 +1087,12 @@
         };
 
         try {
-            const url = currentPizzaId
-                ? `${API_BASE_URL}/pizzas/${currentPizzaId}`
+            const url = currentPizzaId 
+                ? `${API_BASE_URL}/pizzas/${currentPizzaId}` 
                 : `${API_BASE_URL}/pizzas`;
-
+            
             const method = currentPizzaId ? 'PUT' : 'POST';
-
+            
             const response = await fetch(url, {
                 method: method,
                 headers: {
@@ -1153,7 +1153,7 @@
         }
     }
 
-    // ==================== CLIENTES ====================
+    // CLIENTES 
     let clientes = [];
     let currentClienteId = null;
 
@@ -1169,14 +1169,14 @@
             clientes = [
                 {
                     id: 1,
-                    nome: 'João Silva',
+                    nome: 'Raul Palheta',
                     telefone: '(11) 98765-4321',
-                    email: 'joao@email.com',
+                    email: 'Raul@email.com',
                     endereco: 'Rua das Flores, 123 - São Paulo'
                 },
                 {
                     id: 2,
-                    nome: 'Maria Santos',
+                    nome: 'Maria Moreira',
                     telefone: '(11) 97654-3210',
                     email: 'maria@email.com',
                     endereco: 'Av. Paulista, 456 - São Paulo'
@@ -1210,7 +1210,7 @@
         const modal = document.getElementById('clienteModal');
         const title = document.getElementById('clienteModalTitle');
         const form = document.getElementById('clienteForm');
-
+        
         if (id) {
             title.textContent = 'Editar Cliente';
             const cliente = clientes.find(c => c.id === id);
@@ -1225,7 +1225,7 @@
             title.textContent = 'Novo Cliente';
             form.reset();
         }
-
+        
         modal.classList.add('active');
     }
 
@@ -1237,7 +1237,7 @@
 
     async function submitCliente(event) {
         event.preventDefault();
-
+        
         const cliente = {
             nome: document.getElementById('clienteNome').value,
             telefone: document.getElementById('clienteTelefone').value,
@@ -1246,12 +1246,12 @@
         };
 
         try {
-            const url = currentClienteId
-                ? `${API_BASE_URL}/clientes/${currentClienteId}`
+            const url = currentClienteId 
+                ? `${API_BASE_URL}/clientes/${currentClienteId}` 
                 : `${API_BASE_URL}/clientes`;
-
+            
             const method = currentClienteId ? 'PUT' : 'POST';
-
+            
             const response = await fetch(url, {
                 method: method,
                 headers: {
@@ -1312,7 +1312,7 @@
         }
     }
 
-    // ==================== PEDIDOS ====================
+    //  PEDIDOS 
     let pedidos = [];
     let itensPedido = [];
 
@@ -1328,7 +1328,7 @@
                 {
                     id: 1,
                     clienteId: 1,
-                    clienteNome: 'João Silva',
+                    clienteNome: 'Raul Palheta',
                     valorTotal: 91.80,
                     status: 'PREPARANDO',
                     dataHora: '2025-11-22T18:30:00'
@@ -1336,7 +1336,7 @@
                 {
                     id: 2,
                     clienteId: 2,
-                    clienteNome: 'Maria Santos',
+                    clienteNome: 'Maria Moreira',
                     valorTotal: 52.90,
                     status: 'ENTREGUE',
                     dataHora: '2025-11-22T17:15:00'
@@ -1411,7 +1411,7 @@
     function adicionarItem() {
         const pizzaSelect = document.getElementById('itemPizza');
         const quantidade = parseInt(document.getElementById('itemQuantidade').value);
-
+        
         if (!pizzaSelect.value || quantidade < 1) {
             alert('Selecione uma pizza e quantidade válida');
             return;
@@ -1432,7 +1432,7 @@
 
         renderItensPedido();
         calcularTotal();
-
+        
         // Limpar seleção
         document.getElementById('itemPizza').value = '';
         document.getElementById('itemQuantidade').value = 1;
@@ -1546,7 +1546,7 @@
         }
     }
 
-    // ==================== INICIALIZAÇÃO ====================
+    // INICIALIZAÇÃO 
     document.addEventListener('DOMContentLoaded', () => {
         loadPizzas();
         loadClientes();
