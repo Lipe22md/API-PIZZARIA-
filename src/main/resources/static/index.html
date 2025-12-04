@@ -1,12 +1,1557 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <div>
-        <h3>Teste Linha woo</h3>
-    </div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzaria AV3 - As Melhores Pizzas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vermelho: #c92b2b;
+            --amarelo: #f2b705;
+            --verde-escuro: #264027;
+            --branco: #ffffff;
+            --cinza-claro: #f5f5f5;
+            --cinza-medio: #e0e0e0;
+            --cinza-escuro: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--cinza-escuro);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--verde-escuro);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            color: var(--branco);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .navbar-brand span {
+            color: var(--amarelo);
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .navbar-menu a {
+            color: var(--branco);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar-menu a:hover {
+            color: var(--amarelo);
+        }
+
+        /* Carrossel */
+        .carousel {
+            margin-top: 64px;
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .carousel-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-text {
+            color: var(--branco);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .carousel-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .carousel-text p {
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.3);
+            color: var(--branco);
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255,255,255,0.5);
+        }
+
+        .carousel-btn.prev {
+            left: 1rem;
+        }
+
+        .carousel-btn.next {
+            right: 1rem;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s;
+        }
+
+        .carousel-indicator.active {
+            background: var(--amarelo);
+        }
+
+        /* Seções */
+        section {
+            padding: 4rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--verde-escuro);
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        /* Botões */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--vermelho);
+            color: var(--branco);
+        }
+
+        .btn-primary:hover {
+            background: #a82323;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: var(--amarelo);
+            color: var(--cinza-escuro);
+        }
+
+        .btn-secondary:hover {
+            background: #d9a004;
+        }
+
+        .btn-success {
+            background: var(--verde-escuro);
+            color: var(--branco);
+        }
+
+        .btn-success:hover {
+            background: #1a2e1a;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: var(--branco);
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        /* Cards de Pizza */
+        .pizzas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .pizza-card {
+            background: var(--branco);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .pizza-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .pizza-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .pizza-card-body {
+            padding: 1.5rem;
+        }
+
+        .pizza-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .pizza-card-title {
+            font-size: 1.5rem;
+            color: var(--verde-escuro);
+            margin-bottom: 0.25rem;
+        }
+
+        .pizza-card-size {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .pizza-card-price {
+            font-size: 1.5rem;
+            color: var(--vermelho);
+            font-weight: bold;
+        }
+
+        .pizza-card-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .pizza-card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Tabelas */
+        .table-container {
+            background: var(--branco);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--verde-escuro);
+            color: var(--branco);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--cinza-medio);
+        }
+
+        tbody tr:hover {
+            background: var(--cinza-claro);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--branco);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--cinza-medio);
+        }
+
+        .modal-title {
+            font-size: 1.75rem;
+            color: var(--verde-escuro);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--vermelho);
+        }
+
+        /* Formulários */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--cinza-escuro);
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--cinza-medio);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--vermelho);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-checkbox {
+            margin-right: 0.5rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        /* Pedido Items */
+        .pedido-items {
+            border: 1px solid var(--cinza-medio);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pedido-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--cinza-claro);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+
+        .pedido-item-label {
+            font-weight: 500;
+            color: var(--cinza-escuro);
+        }
+
+        .pedido-totals {
+            background: var(--verde-escuro);
+            color: var(--branco);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .pedido-total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+        }
+
+        .pedido-total-row.final {
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-top: 2px solid var(--amarelo);
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .carousel {
+                height: 300px;
+            }
+
+            .carousel-text h1 {
+                font-size: 2rem;
+            }
+
+            .carousel-text p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .pizzas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 600px;
+            }
+
+            .pedido-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .navbar-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .carousel-text h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Utilitários */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-pendente {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-preparando {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-entregue {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelado {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
 </head>
 <body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="navbar-content">
+        <a href="#home" class="navbar-brand">Pizzaria <span>AV3</span></a>
+        <ul class="navbar-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#pizzas">Pizzas</a></li>
+            <li><a href="#clientes">Clientes</a></li>
+            <li><a href="#pedidos">Pedidos</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Carrossel -->
+<section id="home" class="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-slide active">
+            <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaXp6YSUyMG1hcmdoZXJpdGF8ZW58MXx8fHwxNzYzNjg0Nzk5fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Pizza Margherita">
+            <div class="carousel-overlay">
+                <div class="carousel-text">
+                    <h1>Pizzaria AV3</h1>
+                    <p>As Melhores Pizzas da Cidade</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZXBwZXJvbmklMjBwaXp6YXxlbnwxfHx8fDE3NjM3NTczOTl8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Pizza Pepperoni">
+            <div class="carousel-overlay">
+                <div class="carousel-text">
+                    <h1>Pizzaria AV3</h1>
+                    <p>Sabor Autêntico Italiano</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1622880833523-7cf1c0bd4296?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaXp6YSUyMG92ZW58ZW58MXx8fHwxNzYzNzc0Njc3fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Pizza no Forno">
+            <div class="carousel-overlay">
+                <div class="carousel-text">
+                    <h1>Pizzaria AV3</h1>
+                    <p>Massa Artesanal e Ingredientes Frescos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-btn prev" onclick="changeSlide(-1)">❮</button>
+    <button class="carousel-btn next" onclick="changeSlide(1)">❯</button>
+    <div class="carousel-indicators">
+        <button class="carousel-indicator active" onclick="goToSlide(0)"></button>
+        <button class="carousel-indicator" onclick="goToSlide(1)"></button>
+        <button class="carousel-indicator" onclick="goToSlide(2)"></button>
+    </div>
+</section>
+
+<!-- Seção de Pizzas -->
+<section id="pizzas">
+    <div class="container">
+        <h2 class="section-title">Nosso Cardápio</h2>
+        <p class="section-subtitle">Escolha entre nossas deliciosas pizzas artesanais</p>
+
+        <div class="text-center mb-2">
+            <button class="btn btn-primary" onclick="openPizzaModal()">+ Nova Pizza</button>
+        </div>
+
+        <div class="pizzas-grid" id="pizzasGrid">
+            <!-- Pizzas serão carregadas aqui via JavaScript -->
+        </div>
+    </div>
+</section>
+
+<!-- Seção de Clientes -->
+<section id="clientes">
+    <div class="container">
+        <h2 class="section-title">Clientes</h2>
+        <p class="section-subtitle">Gerencie seus clientes cadastrados</p>
+
+        <div class="text-center mb-2">
+            <button class="btn btn-primary" onclick="openClienteModal()">+ Novo Cliente</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody id="clientesTable">
+                <!-- Clientes serão carregados aqui via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Seção de Pedidos -->
+<section id="pedidos">
+    <div class="container">
+        <h2 class="section-title">Pedidos</h2>
+        <p class="section-subtitle">Gerencie todos os pedidos da pizzaria</p>
+
+        <div class="text-center mb-2">
+            <button class="btn btn-primary" onclick="openPedidoModal()">+ Novo Pedido</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Valor Total</th>
+                    <th>Status</th>
+                    <th>Data/Hora</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody id="pedidosTable">
+                <!-- Pedidos serão carregados aqui via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Modal Pizza -->
+<div id="pizzaModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="pizzaModalTitle">Nova Pizza</h3>
+            <button class="modal-close" onclick="closePizzaModal()">&times;</button>
+        </div>
+        <form id="pizzaForm" onsubmit="submitPizza(event)">
+            <input type="hidden" id="pizzaId">
+
+            <div class="form-group">
+                <label class="form-label">Nome</label>
+                <input type="text" class="form-input" id="pizzaNome" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Tamanho</label>
+                <select class="form-select" id="pizzaTamanho" required>
+                    <option value="">Selecione</option>
+                    <option value="PEQUENA">Pequena</option>
+                    <option value="MEDIA">Média</option>
+                    <option value="GRANDE">Grande</option>
+                    <option value="FAMILIA">Família</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Preço (R$)</label>
+                <input type="number" class="form-input" id="pizzaPreco" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Descrição</label>
+                <textarea class="form-textarea" id="pizzaDescricao" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" class="form-checkbox" id="pizzaDisponivel" checked>
+                    Disponível
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closePizzaModal()">Cancelar</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Cliente -->
+<div id="clienteModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="clienteModalTitle">Novo Cliente</h3>
+            <button class="modal-close" onclick="closeClienteModal()">&times;</button>
+        </div>
+        <form id="clienteForm" onsubmit="submitCliente(event)">
+            <input type="hidden" id="clienteId">
+
+            <div class="form-group">
+                <label class="form-label">Nome</label>
+                <input type="text" class="form-input" id="clienteNome" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Telefone</label>
+                <input type="tel" class="form-input" id="clienteTelefone" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="clienteEmail" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Endereço</label>
+                <input type="text" class="form-input" id="clienteEndereco" required>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeClienteModal()">Cancelar</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Pedido -->
+<div id="pedidoModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Novo Pedido</h3>
+            <button class="modal-close" onclick="closePedidoModal()">&times;</button>
+        </div>
+        <form id="pedidoForm" onsubmit="submitPedido(event)">
+            <div class="form-group">
+                <label class="form-label">Cliente</label>
+                <select class="form-select" id="pedidoCliente" required>
+                    <option value="">Selecione um cliente</option>
+                    <!-- Clientes serão carregados aqui -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="pedidoStatus" required>
+                    <option value="PENDENTE">Pendente</option>
+                    <option value="PREPARANDO">Preparando</option>
+                    <option value="ENTREGUE">Entregue</option>
+                    <option value="CANCELADO">Cancelado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Itens do Pedido</label>
+                <div class="pedido-items">
+                    <div class="form-group">
+                        <label class="form-label">Pizza</label>
+                        <select class="form-select" id="itemPizza">
+                            <option value="">Selecione uma pizza</option>
+                            <!-- Pizzas serão carregadas aqui -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Quantidade</label>
+                        <input type="number" class="form-input" id="itemQuantidade" min="1" value="1">
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="adicionarItem()">+ Adicionar Item</button>
+
+                    <div id="itensList" style="margin-top: 1rem;">
+                        <!-- Itens adicionados aparecerão aqui -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="pedido-totals">
+                <div class="pedido-total-row final">
+                    <span>Valor Total:</span>
+                    <span id="valorTotal">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closePedidoModal()">Cancelar</button>
+                <button type="submit" class="btn btn-success">Finalizar Pedido</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    //  CONFIGURAÇÃO DA API
+    const API_BASE_URL = 'http://localhost:8080';
+
+    // CAROUSEL 
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const indicators = document.querySelectorAll('.carousel-indicator');
+
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        if (index >= slides.length) currentSlide = 0;
+        if (index < 0) currentSlide = slides.length - 1;
+        
+        slides[currentSlide].classList.add('active');
+        indicators[currentSlide].classList.add('active');
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        showSlide(currentSlide);
+    }
+
+    function goToSlide(index) {
+        currentSlide = index;
+        showSlide(currentSlide);
+    }
+
+    // Auto-play do carrossel
+    setInterval(() => {
+        currentSlide++;
+        showSlide(currentSlide);
+    }, 5000);
+
+    // NAVEGAÇÃO SUAVE
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const navHeight = document.querySelector('.navbar').offsetHeight;
+                const targetPosition = target.offsetTop - navHeight;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // PIZZAS
+    let pizzas = [];
+    let currentPizzaId = null;
+
+    async function loadPizzas() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/pizzas`);
+            pizzas = await response.json();
+            renderPizzas();
+            loadPizzasForPedido();
+        } catch (error) {
+            console.error('Erro ao carregar pizzas:', error);
+            // Dados mock para demonstração
+            pizzas = [
+                {
+                    id: 1,
+                    nome: 'Margherita',
+                    tamanho: 'GRANDE',
+                    preco: 45.90,
+                    descricao: 'Molho de tomate, mussarela, manjericão fresco e azeite',
+                    disponivel: true
+                },
+                {
+                    id: 2,
+                    nome: 'Calabresa',
+                    tamanho: 'GRANDE',
+                    preco: 48.90,
+                    descricao: 'Calabresa, cebola, mussarela e azeitonas',
+                    disponivel: true
+                },
+                {
+                    id: 3,
+                    nome: 'Portuguesa',
+                    tamanho: 'GRANDE',
+                    preco: 52.90,
+                    descricao: 'Presunto, ovos, cebola, azeitonas, mussarela e orégano',
+                    disponivel: false
+                }
+            ];
+            renderPizzas();
+            loadPizzasForPedido();
+        }
+    }
+
+    function renderPizzas() {
+        const grid = document.getElementById('pizzasGrid');
+        grid.innerHTML = pizzas.map(pizza => `
+            <div class="pizza-card">
+                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaXp6YSUyMG1hcmdoZXJpdGF8ZW58MXx8fHwxNzYzNjg0Nzk5fDA&ixlib=rb-4.1.0&q=80&w=400" alt="${pizza.nome}" class="pizza-card-img">
+                <div class="pizza-card-body">
+                    <div class="pizza-card-header">
+                        <div>
+                            <h3 class="pizza-card-title">${pizza.nome}</h3>
+                            <div class="pizza-card-size">${formatTamanho(pizza.tamanho)}</div>
+                        </div>
+                        <div class="pizza-card-price">R$ ${pizza.preco.toFixed(2)}</div>
+                    </div>
+                    <p class="pizza-card-description">${pizza.descricao}</p>
+                    <span class="badge ${pizza.disponivel ? 'badge-success' : 'badge-danger'}">
+                        ${pizza.disponivel ? 'Disponível' : 'Indisponível'}
+                    </span>
+                    <div class="pizza-card-actions">
+                        <button class="btn btn-secondary btn-small" onclick="editPizza(${pizza.id})">Editar</button>
+                        <button class="btn btn-danger btn-small" onclick="deletePizza(${pizza.id})">Excluir</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function formatTamanho(tamanho) {
+        const tamanhos = {
+            'PEQUENA': 'Pequena',
+            'MEDIA': 'Média',
+            'GRANDE': 'Grande',
+            'FAMILIA': 'Família'
+        };
+        return tamanhos[tamanho] || tamanho;
+    }
+
+    function openPizzaModal(id = null) {
+        currentPizzaId = id;
+        const modal = document.getElementById('pizzaModal');
+        const title = document.getElementById('pizzaModalTitle');
+        const form = document.getElementById('pizzaForm');
+        
+        if (id) {
+            title.textContent = 'Editar Pizza';
+            const pizza = pizzas.find(p => p.id === id);
+            if (pizza) {
+                document.getElementById('pizzaId').value = pizza.id;
+                document.getElementById('pizzaNome').value = pizza.nome;
+                document.getElementById('pizzaTamanho').value = pizza.tamanho;
+                document.getElementById('pizzaPreco').value = pizza.preco;
+                document.getElementById('pizzaDescricao').value = pizza.descricao;
+                document.getElementById('pizzaDisponivel').checked = pizza.disponivel;
+            }
+        } else {
+            title.textContent = 'Nova Pizza';
+            form.reset();
+        }
+        
+        modal.classList.add('active');
+    }
+
+    function closePizzaModal() {
+        document.getElementById('pizzaModal').classList.remove('active');
+        document.getElementById('pizzaForm').reset();
+        currentPizzaId = null;
+    }
+
+    async function submitPizza(event) {
+        event.preventDefault();
+        
+        const pizza = {
+            nome: document.getElementById('pizzaNome').value,
+            tamanho: document.getElementById('pizzaTamanho').value,
+            preco: parseFloat(document.getElementById('pizzaPreco').value),
+            descricao: document.getElementById('pizzaDescricao').value,
+            disponivel: document.getElementById('pizzaDisponivel').checked
+        };
+
+        try {
+            const url = currentPizzaId 
+                ? `${API_BASE_URL}/pizzas/${currentPizzaId}` 
+                : `${API_BASE_URL}/pizzas`;
+            
+            const method = currentPizzaId ? 'PUT' : 'POST';
+            
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(pizza)
+            });
+
+            if (response.ok) {
+                closePizzaModal();
+                loadPizzas();
+                alert('Pizza salva com sucesso!');
+            } else {
+                alert('Erro ao salvar pizza');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            // Simulação de sucesso para demonstração
+            if (currentPizzaId) {
+                const index = pizzas.findIndex(p => p.id === currentPizzaId);
+                pizzas[index] = { ...pizza, id: currentPizzaId };
+            } else {
+                pizza.id = pizzas.length + 1;
+                pizzas.push(pizza);
+            }
+            closePizzaModal();
+            renderPizzas();
+            loadPizzasForPedido();
+            alert('Pizza salva com sucesso! (modo demonstração)');
+        }
+    }
+
+    function editPizza(id) {
+        openPizzaModal(id);
+    }
+
+    async function deletePizza(id) {
+        if (!confirm('Tem certeza que deseja excluir esta pizza?')) return;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/pizzas/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                loadPizzas();
+                alert('Pizza excluída com sucesso!');
+            } else {
+                alert('Erro ao excluir pizza');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            // Simulação de sucesso para demonstração
+            pizzas = pizzas.filter(p => p.id !== id);
+            renderPizzas();
+            loadPizzasForPedido();
+            alert('Pizza excluída com sucesso! (modo demonstração)');
+        }
+    }
+
+    // CLIENTES 
+    let clientes = [];
+    let currentClienteId = null;
+
+    async function loadClientes() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/clientes`);
+            clientes = await response.json();
+            renderClientes();
+            loadClientesForPedido();
+        } catch (error) {
+            console.error('Erro ao carregar clientes:', error);
+            // Dados mock para demonstração
+            clientes = [
+                {
+                    id: 1,
+                    nome: 'Raul Palheta',
+                    telefone: '(11) 98765-4321',
+                    email: 'Raul@email.com',
+                    endereco: 'Rua das Flores, 123 - São Paulo'
+                },
+                {
+                    id: 2,
+                    nome: 'Maria Moreira',
+                    telefone: '(11) 97654-3210',
+                    email: 'maria@email.com',
+                    endereco: 'Av. Paulista, 456 - São Paulo'
+                }
+            ];
+            renderClientes();
+            loadClientesForPedido();
+        }
+    }
+
+    function renderClientes() {
+        const table = document.getElementById('clientesTable');
+        table.innerHTML = clientes.map(cliente => `
+            <tr>
+                <td>${cliente.nome}</td>
+                <td>${cliente.telefone}</td>
+                <td>${cliente.email}</td>
+                <td>${cliente.endereco}</td>
+                <td>
+                    <div class="actions-cell">
+                        <button class="btn btn-secondary btn-small" onclick="editCliente(${cliente.id})">Editar</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteCliente(${cliente.id})">Excluir</button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function openClienteModal(id = null) {
+        currentClienteId = id;
+        const modal = document.getElementById('clienteModal');
+        const title = document.getElementById('clienteModalTitle');
+        const form = document.getElementById('clienteForm');
+        
+        if (id) {
+            title.textContent = 'Editar Cliente';
+            const cliente = clientes.find(c => c.id === id);
+            if (cliente) {
+                document.getElementById('clienteId').value = cliente.id;
+                document.getElementById('clienteNome').value = cliente.nome;
+                document.getElementById('clienteTelefone').value = cliente.telefone;
+                document.getElementById('clienteEmail').value = cliente.email;
+                document.getElementById('clienteEndereco').value = cliente.endereco;
+            }
+        } else {
+            title.textContent = 'Novo Cliente';
+            form.reset();
+        }
+        
+        modal.classList.add('active');
+    }
+
+    function closeClienteModal() {
+        document.getElementById('clienteModal').classList.remove('active');
+        document.getElementById('clienteForm').reset();
+        currentClienteId = null;
+    }
+
+    async function submitCliente(event) {
+        event.preventDefault();
+        
+        const cliente = {
+            nome: document.getElementById('clienteNome').value,
+            telefone: document.getElementById('clienteTelefone').value,
+            email: document.getElementById('clienteEmail').value,
+            endereco: document.getElementById('clienteEndereco').value
+        };
+
+        try {
+            const url = currentClienteId 
+                ? `${API_BASE_URL}/clientes/${currentClienteId}` 
+                : `${API_BASE_URL}/clientes`;
+            
+            const method = currentClienteId ? 'PUT' : 'POST';
+            
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cliente)
+            });
+
+            if (response.ok) {
+                closeClienteModal();
+                loadClientes();
+                alert('Cliente salvo com sucesso!');
+            } else {
+                alert('Erro ao salvar cliente');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            // Simulação de sucesso para demonstração
+            if (currentClienteId) {
+                const index = clientes.findIndex(c => c.id === currentClienteId);
+                clientes[index] = { ...cliente, id: currentClienteId };
+            } else {
+                cliente.id = clientes.length + 1;
+                clientes.push(cliente);
+            }
+            closeClienteModal();
+            renderClientes();
+            loadClientesForPedido();
+            alert('Cliente salvo com sucesso! (modo demonstração)');
+        }
+    }
+
+    function editCliente(id) {
+        openClienteModal(id);
+    }
+
+    async function deleteCliente(id) {
+        if (!confirm('Tem certeza que deseja excluir este cliente?')) return;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/clientes/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                loadClientes();
+                alert('Cliente excluído com sucesso!');
+            } else {
+                alert('Erro ao excluir cliente');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            // Simulação de sucesso para demonstração
+            clientes = clientes.filter(c => c.id !== id);
+            renderClientes();
+            loadClientesForPedido();
+            alert('Cliente excluído com sucesso! (modo demonstração)');
+        }
+    }
+
+    //  PEDIDOS 
+    let pedidos = [];
+    let itensPedido = [];
+
+    async function loadPedidos() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/pedidos`);
+            pedidos = await response.json();
+            renderPedidos();
+        } catch (error) {
+            console.error('Erro ao carregar pedidos:', error);
+            // Dados mock para demonstração
+            pedidos = [
+                {
+                    id: 1,
+                    clienteId: 1,
+                    clienteNome: 'Raul Palheta',
+                    valorTotal: 91.80,
+                    status: 'PREPARANDO',
+                    dataHora: '2025-11-22T18:30:00'
+                },
+                {
+                    id: 2,
+                    clienteId: 2,
+                    clienteNome: 'Maria Moreira',
+                    valorTotal: 52.90,
+                    status: 'ENTREGUE',
+                    dataHora: '2025-11-22T17:15:00'
+                }
+            ];
+            renderPedidos();
+        }
+    }
+
+    function renderPedidos() {
+        const table = document.getElementById('pedidosTable');
+        table.innerHTML = pedidos.map(pedido => `
+            <tr>
+                <td>#${pedido.id}</td>
+                <td>${pedido.clienteNome || 'Cliente não encontrado'}</td>
+                <td>R$ ${pedido.valorTotal.toFixed(2)}</td>
+                <td><span class="status-badge status-${pedido.status.toLowerCase()}">${formatStatus(pedido.status)}</span></td>
+                <td>${formatDateTime(pedido.dataHora)}</td>
+                <td>
+                    <div class="actions-cell">
+                        <button class="btn btn-danger btn-small" onclick="deletePedido(${pedido.id})">Cancelar</button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function formatStatus(status) {
+        const statusMap = {
+            'PENDENTE': 'Pendente',
+            'PREPARANDO': 'Preparando',
+            'ENTREGUE': 'Entregue',
+            'CANCELADO': 'Cancelado'
+        };
+        return statusMap[status] || status;
+    }
+
+    function formatDateTime(dateTime) {
+        const date = new Date(dateTime);
+        return date.toLocaleString('pt-BR');
+    }
+
+    function loadClientesForPedido() {
+        const select = document.getElementById('pedidoCliente');
+        select.innerHTML = '<option value="">Selecione um cliente</option>' +
+            clientes.map(cliente => `
+                <option value="${cliente.id}">${cliente.nome}</option>
+            `).join('');
+    }
+
+    function loadPizzasForPedido() {
+        const select = document.getElementById('itemPizza');
+        select.innerHTML = '<option value="">Selecione uma pizza</option>' +
+            pizzas.filter(p => p.disponivel).map(pizza => `
+                <option value="${pizza.id}" data-preco="${pizza.preco}">${pizza.nome} - R$ ${pizza.preco.toFixed(2)}</option>
+            `).join('');
+    }
+
+    function openPedidoModal() {
+        document.getElementById('pedidoModal').classList.add('active');
+        itensPedido = [];
+        renderItensPedido();
+        calcularTotal();
+    }
+
+    function closePedidoModal() {
+        document.getElementById('pedidoModal').classList.remove('active');
+        document.getElementById('pedidoForm').reset();
+        itensPedido = [];
+    }
+
+    function adicionarItem() {
+        const pizzaSelect = document.getElementById('itemPizza');
+        const quantidade = parseInt(document.getElementById('itemQuantidade').value);
+        
+        if (!pizzaSelect.value || quantidade < 1) {
+            alert('Selecione uma pizza e quantidade válida');
+            return;
+        }
+
+        const pizzaId = parseInt(pizzaSelect.value);
+        const pizza = pizzas.find(p => p.id === pizzaId);
+        const precoUnitario = pizza.preco;
+        const subtotal = precoUnitario * quantidade;
+
+        itensPedido.push({
+            pizzaId,
+            pizzaNome: pizza.nome,
+            quantidade,
+            precoUnitario,
+            subtotal
+        });
+
+        renderItensPedido();
+        calcularTotal();
+        
+        // Limpar seleção
+        document.getElementById('itemPizza').value = '';
+        document.getElementById('itemQuantidade').value = 1;
+    }
+
+    function renderItensPedido() {
+        const lista = document.getElementById('itensList');
+        if (itensPedido.length === 0) {
+            lista.innerHTML = '<p style="color: #999; text-align: center; padding: 1rem;">Nenhum item adicionado</p>';
+            return;
+        }
+
+        lista.innerHTML = itensPedido.map((item, index) => `
+            <div class="pedido-item">
+                <span class="pedido-item-label">${item.pizzaNome}</span>
+                <span>${item.quantidade}x</span>
+                <span>R$ ${item.subtotal.toFixed(2)}</span>
+                <button type="button" class="btn btn-danger btn-small" onclick="removerItem(${index})">×</button>
+            </div>
+        `).join('');
+    }
+
+    function removerItem(index) {
+        itensPedido.splice(index, 1);
+        renderItensPedido();
+        calcularTotal();
+    }
+
+    function calcularTotal() {
+        const total = itensPedido.reduce((sum, item) => sum + item.subtotal, 0);
+        document.getElementById('valorTotal').textContent = `R$ ${total.toFixed(2)}`;
+    }
+
+    async function submitPedido(event) {
+        event.preventDefault();
+
+        if (itensPedido.length === 0) {
+            alert('Adicione pelo menos um item ao pedido');
+            return;
+        }
+
+        const clienteId = parseInt(document.getElementById('pedidoCliente').value);
+        const status = document.getElementById('pedidoStatus').value;
+        const valorTotal = itensPedido.reduce((sum, item) => sum + item.subtotal, 0);
+
+        const pedido = {
+            clienteId,
+            status,
+            valorTotal,
+            itens: itensPedido.map(item => ({
+                pizzaId: item.pizzaId,
+                quantidade: item.quantidade,
+                precoUnitario: item.precoUnitario
+            }))
+        };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/pedidos`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(pedido)
+            });
+
+            if (response.ok) {
+                closePedidoModal();
+                loadPedidos();
+                alert('Pedido criado com sucesso!');
+            } else {
+                alert('Erro ao criar pedido');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            // Simulação de sucesso para demonstração
+            const cliente = clientes.find(c => c.id === clienteId);
+            pedidos.push({
+                id: pedidos.length + 1,
+                clienteId,
+                clienteNome: cliente?.nome || 'Cliente não encontrado',
+                valorTotal,
+                status,
+                dataHora: new Date().toISOString()
+            });
+            closePedidoModal();
+            renderPedidos();
+            alert('Pedido criado com sucesso! (modo demonstração)');
+        }
+    }
+
+    async function deletePedido(id) {
+        if (!confirm('Tem certeza que deseja cancelar este pedido?')) return;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/pedidos/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                loadPedidos();
+                alert('Pedido cancelado com sucesso!');
+            } else {
+                alert('Erro ao cancelar pedido');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            // Simulação de sucesso para demonstração
+            pedidos = pedidos.filter(p => p.id !== id);
+            renderPedidos();
+            alert('Pedido cancelado com sucesso! (modo demonstração)');
+        }
+    }
+
+    // INICIALIZAÇÃO 
+    document.addEventListener('DOMContentLoaded', () => {
+        loadPizzas();
+        loadClientes();
+        loadPedidos();
+    });
+</script>
 </body>
 </html>
